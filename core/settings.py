@@ -56,7 +56,7 @@ INSTALLED_APPS = [
     'authentication',
     'developersOnly',
     'transactionLog',
-    'client',
+    # 'client',
     'group',
 ]
 
@@ -84,7 +84,7 @@ AUTHENTICATION_BACKENDS = (
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",  # adjust as per your setup
+        "LOCATION": os.getenv("REDIS_URL", "redis://127.0.0.1:6379/1"),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -142,6 +142,9 @@ DATABASES = {
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST', 'localhost'),
         'PORT': os.getenv('DB_PORT', '5432'),
+        'OPTIONS': {
+            'sslmode': 'require',  # important for Neon
+        },
     }
 }
 

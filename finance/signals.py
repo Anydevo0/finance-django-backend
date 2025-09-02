@@ -15,7 +15,7 @@ def default_user_categories(sender, instance, created, **kwargs):
     """
     if created:
         user = instance
-        default_group = Group.objects.get(name='default_categories')
+        default_group, created = Group.objects.get_or_create(name='default_categories')
         user.groups.add(default_group)
 
 
